@@ -1,0 +1,78 @@
+newmtl Arms0_lowSG
+illum 4
+Kd 0.30 0.21 0.21
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Arms_Metallic.png
+map_Kd textures\Arms_BaseColor.png
+map_bump textures\Arms_Normal.png
+map_Ns textures\Arms_Roughness.png
+
+newmtl Axe2_lowSG
+illum 4
+Kd 0.07 0.14 0.43
+Ka 0.50 0.50 0.50
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.00 0.00 0.00
+Ns 0.00
+map_Ka textures\Axe_Metallic.png
+map_Kd textures\Axe_BaseColor.png
+map_bump textures\Axe_Normal.png
+map_Ns textures\Axe_Roughness.png
+
+newmtl Belt1_lowSG
+illum 4
+Kd 0.21 0.30 0.29
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Skirt_Metallic.png
+map_Kd textures\Skirt_BaseColor.png
+map_bump textures\Skirt_Normal.png
+map_Ns textures\Skirt_Roughness.png
+
+newmtl Foot_lowSG
+illum 4
+Kd 0.21 0.30 0.21
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Legs_Metallic.png
+map_Kd textures\Legs_BaseColor.png
+map_bump textures\Legs_Normal.png
+map_Ns textures\Legs_Roughness.png
+
+newmtl Hemlet0_lowSG
+illum 4
+Kd 0.21 0.21 0.30
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Head_Metallic.png
+map_Kd textures\Head_BaseColor.png
+map_bump textures\Head_Normal.png
+map_Ns textures\Head_Roughness.png
+
+newmtl LShoulder0_lowSG
+illum 4
+Kd 0.30 0.21 0.29
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Stuff_Metallic.png
+map_Kd textures\Stuff_BaseColor.png
+map_bump textures\Stuff_Normal.png
+map_Ns textures\Stuff_Roughness.png
+
+newmtl Torso_lowSG
+illum 4
+Kd 0.30 0.29 0.21
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+map_Ka textures\Torso_Metallic.png
+map_Kd textures\Torso_BaseColor.png
+map_bump textures\Torso_Normal.png
+map_Ns textures\Torso_Roughness.png

@@ -1,0 +1,16 @@
+# Blender MTL File: 'KnifeLow.blend'
+# Material Count: 1
+
+newmtl Knife
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Ka textures\blade_metallic.jpg
+map_Kd textures\blade_albedo.jpg
+map_bump textures\blade_normal.png
+map_Ns textures\blade_roughness.jpg

@@ -1,0 +1,14 @@
+Details:- 
+This is a polygon model of "Sea Shell"  with PBR compatible materials.
+Available in three different formats.
+Autodesk Maya 2016 .mb,  FBX and OBJ.
+Software used: Autodesk Maya 2016,Substance Painter, and Adobe Photoshop
+Texture Maps: Base Color, Normal, Metallic, Roughness . (Total 4 JPG images)
+Textures Resolution :  1024x1024
+Faces - 7536
+Vertices- 7542
+Renderer      : Maya Hardware 2.0 
+................................................................
+License:-
+Can be used commercially with credits.
+Animated Heaven - Designs of eternity

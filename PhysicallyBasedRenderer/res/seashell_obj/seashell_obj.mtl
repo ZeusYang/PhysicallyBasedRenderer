@@ -1,0 +1,15 @@
+newmtl pbr
+	Ns 9.999999
+	Ni 1.500000
+	d 1.000000
+	Tr 0.000000
+	Tf 1.000000 1.000000 1.000000 
+	illum 2
+	Ka 0.588235 0.588235 0.588235
+	Kd 0.588235 0.588235 0.588235
+	Ks 0.000000 0.000000 0.000000
+	Ke 0.000000 0.000000 0.000000
+	map_Ka textures\shell_metallic.png
+	map_Kd textures\shell_basecolour.jpg
+	map_bump textures\shell_normal.png
+	map_Ns textures\shell_roughness.png

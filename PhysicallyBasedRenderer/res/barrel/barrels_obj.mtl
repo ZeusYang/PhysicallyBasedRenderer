@@ -1,0 +1,32 @@
+newmtl StingrayPBS3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+map_Ka textures\drum1_metallic.png
+map_Kd textures\drum1_base_color.png
+map_bump textures\drum1_normal.png
+map_Ns textures\drum1_roughness.png
+
+newmtl StingrayPBS4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+map_Ka textures\drum2_metallic.png
+map_Kd textures\drum2_base_color.png
+map_bump textures\drum2_normal.png
+map_Ns textures\drum2_roughness.png
+
+newmtl StingrayPBS5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+map_Ka textures\drum3_metallic.png
+map_Kd textures\drum3_base_color.png
+map_bump textures\drum3_normal.png
+map_Ns textures\drum3_roughness.png

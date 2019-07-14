@@ -1,0 +1,10 @@
+newmtl StingrayPBS1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 0.00
+map_Ka textures\lantern_Metallic.jpg
+map_Kd textures\lantern_Base_Color.jpg
+map_bump textures\lantern_Normal_OpenGL.jpg
+map_Ns textures\lantern_Roughness.jpg
