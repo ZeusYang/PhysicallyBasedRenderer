@@ -117,6 +117,9 @@
     <ClCompile Include="Renderer\Drawable\PointLightDrawable.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Postprocess\IBLAuxiliary.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\Camera\Camera3D.h">
@@ -231,6 +234,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Drawable\PointLightDrawable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Postprocess\IBLAuxiliary.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

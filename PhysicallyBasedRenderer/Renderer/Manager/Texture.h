@@ -50,11 +50,45 @@ namespace Renderer
 		virtual void clearTexture();
 	};
 
+	class Texture2DHdr : public Texture
+	{
+	private:
+		int m_width, m_height, m_channel;
+
+	public:
+		typedef std::shared_ptr<Texture2D> ptr;
+
+		Texture2DHdr(const std::string &path);
+		Texture2DHdr(const char *data, int width, int height);
+		~Texture2DHdr();
+
+		virtual void bind(unsigned int unit);
+		virtual void unBind();
+
+	private:
+		virtual void setupTexture(const std::string &path, const std::string &pFix);
+		virtual void clearTexture();
+	};
+
 	class TextureCube : public Texture
 	{
 	public:
 		TextureCube(const std::string &path, const std::string &postFix);
 		~TextureCube();
+
+		virtual void bind(unsigned int unit);
+		virtual void unBind();
+
+	private:
+		virtual void setupTexture(const std::string &path, const std::string &pFix);
+		virtual void clearTexture();
+	};
+
+	class TextureCubeHdrRaw : public Texture
+	{
+	public:
+		TextureCubeHdrRaw(const char *data, int width, int height, bool mipmap = false);
+		~TextureCubeHdrRaw();
 
 		virtual void bind(unsigned int unit);
 		virtual void unBind();

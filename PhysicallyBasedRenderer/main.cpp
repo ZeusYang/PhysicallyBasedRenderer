@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Renderer/RenderDevice.h"
-#include "Renderer/Camera/FPSCamera.h"
+#include "Renderer/Camera/TPSCamera.h"
 #include "Renderer/Manager/Geometry.h"
 #include "Renderer/Drawable/StaticModelDrawable.h"
 
@@ -18,15 +18,21 @@ int main(int argc, char *argv[])
 	window->initialize("PBR Renderer", width, height, false);
 	RenderSystem::ptr renderSys = window->getRenderSystem();
 	
-	// sunlight.
 	//renderSys->setSkyDome("./res/skybox/", ".jpg");
 
 	// camera
-	Camera3D::ptr camera = renderSys->createFPSCamera(
-		glm::vec3(0, 50, 100),
+	//Camera3D::ptr camera = renderSys->createFPSCamera(
+	//	glm::vec3(0, 50, 100),
+	//	glm::vec3(0.0f));
+	Camera3D::ptr camera = renderSys->createTPSCamera(
+		glm::vec3(0, 100, 200),
 		glm::vec3(0.0f));
 	camera->setPerspectiveProject(45.0f, static_cast<float>(width) / height, 0.1f, 3000.0f);
-	reinterpret_cast<FPSCamera*>(camera.get())->setMoveSpeed(150);
+	reinterpret_cast<TPSCamera*>(camera.get())->setWheelSensitivity(50);
+	reinterpret_cast<TPSCamera*>(camera.get())->setDistanceLimt(0.1f, 300);
+	reinterpret_cast<TPSCamera*>(camera.get())->setDistance(200);
+	reinterpret_cast<TPSCamera*>(camera.get())->setPitch(10);
+	//reinterpret_cast<FPSCamera*>(camera.get())->setMoveSpeed(150);
 
 	//Scene::ptr sponza = shared_ptr<SponzaScene>(new SponzaScene());
 	//sponza->initializeScene(renderSys);
@@ -36,6 +42,9 @@ int main(int argc, char *argv[])
 
 	//Scene::ptr hatka = shared_ptr<HatkaScene>(new HatkaScene());
 	//hatka->initializeScene(renderSys);
+
+	// set sky map.
+	renderSys->setSkyDomeHdr("./res/Hdr/Mans_Outside_2k.hdr");
 
 	while (window->run())
 	{

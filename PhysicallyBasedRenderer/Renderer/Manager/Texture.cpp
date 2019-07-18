@@ -169,6 +169,56 @@ namespace Renderer
 		glDeleteTextures(1, &m_id);
 	}
 
+	TextureCubeHdrRaw::TextureCubeHdrRaw(const char * data, int width, int height, bool mipmap)
+	{
+		glGenTextures(1, &m_id);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_id);
+		for (unsigned int i = 0; i < 6; ++i)
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0,
+				GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		if (!mipmap)
+		{
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
+		else
+		{
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+		}
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	}
+
+	TextureCubeHdrRaw::~TextureCubeHdrRaw()
+	{
+		clearTexture();
+	}
+
+	void TextureCubeHdrRaw::bind(unsigned int unit)
+	{
+		glActiveTexture(GL_TEXTURE0 + unit);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_id);
+	}
+
+	void TextureCubeHdrRaw::unBind()
+	{
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+	}
+
+	void TextureCubeHdrRaw::setupTexture(const std::string & path, const std::string & pFix)
+	{
+		return;
+	}
+
+	void TextureCubeHdrRaw::clearTexture()
+	{
+		glDeleteTextures(1, &m_id);
+	}
+
 	TextureDepth::TextureDepth(int width, int height)
 		:m_width(width), m_height(height)
 	{
@@ -296,6 +346,72 @@ namespace Renderer
 	}
 
 	void TextureRaw::clearTexture()
+	{
+		glDeleteTextures(1, &m_id);
+	}
+
+	Texture2DHdr::Texture2DHdr(const std::string & path)
+	{
+		setupTexture(path, "");
+	}
+
+	Texture2DHdr::Texture2DHdr(const char * data, int width, int height)
+		:m_width(width), m_height(height)
+	{
+		glGenTextures(1, &m_id);
+		glBindTexture(GL_TEXTURE_2D, m_id);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height,
+			0, GL_RGB, GL_FLOAT, data);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	Texture2DHdr::~Texture2DHdr()
+	{
+		clearTexture();
+	}
+
+	void Texture2DHdr::bind(unsigned int unit)
+	{
+		glActiveTexture(GL_TEXTURE0 + unit);
+		glBindTexture(GL_TEXTURE_2D, m_id);
+	}
+
+	void Texture2DHdr::unBind()
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void Texture2DHdr::setupTexture(const std::string & path, const std::string & pFix)
+	{
+		// texture unit generation.
+		glGenTextures(1, &m_id);
+		glBindTexture(GL_TEXTURE_2D, m_id);
+		// filter setting.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		// load the image.
+		stbi_set_flip_vertically_on_load(true);
+		float *data = stbi_loadf(path.c_str(), &m_width, &m_height, &m_channel, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, m_width, m_height,
+				0, GL_RGB, GL_FLOAT, data);
+		}
+		else
+		{
+			std::cout << "Failed to load texture at path:" << path << std::endl;
+		}
+		stbi_image_free(data);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void Texture2DHdr::clearTexture()
 	{
 		glDeleteTextures(1, &m_id);
 	}

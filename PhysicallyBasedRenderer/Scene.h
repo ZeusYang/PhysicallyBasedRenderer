@@ -35,14 +35,3 @@ public:
 
 	virtual void initializeScene(Renderer::RenderSystem::ptr renderSys);
 };
-
-class HatkaScene : public Scene
-{
-public:
-	typedef std::shared_ptr<HatkaScene> ptr;
-
-	HatkaScene() = default;
-	virtual ~HatkaScene() = default;
-
-	virtual void initializeScene(Renderer::RenderSystem::ptr renderSys);
-};

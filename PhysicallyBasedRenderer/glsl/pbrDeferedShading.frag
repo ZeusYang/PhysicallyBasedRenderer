@@ -31,6 +31,9 @@ uniform sampler2D dalbedo;
 uniform sampler2D droughness;
 uniform sampler2D ddepth;
 uniform sampler2D shadowDepth;
+uniform samplerCube irradianceMap;
+uniform samplerCube prefilteredMap;
+uniform sampler2D brdfLutMap;
 
 layout(location = 0) out vec4 fragColor;
 layout(location = 1) out vec4 brightColor;
@@ -40,6 +43,7 @@ float NormalDistributionGGX(vec3 N, vec3 H, float roughness);
 float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
+vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness);
 float shadowCalculation(vec4 fragPosLightSpace, float bias);
 
 const float PI = 3.14159265359;
@@ -131,7 +135,21 @@ void main()
 	float shadow = 1.0f;
 	vec4 FragPosLightSpace = lightSpaceMatrix * vec4(FragPos, 1.0f);
 	shadow = 1.0f - shadowCalculation(FragPosLightSpace, 0.0f);
-	fragColor.xyz = ao * albedo * 0.02f + fragColor.xyz * shadow + pointLightRadiance;
+
+	// ambient lighting.
+	vec3 ambientS = fresnelSchlickRoughness(max(dot(normal, viewDir), 0.0f), F0, roughness);
+	vec3 ambientD = vec3(1.0f) - ambientS;
+	vec3 irradiance = texture(irradianceMap, normal).rgb;
+
+	vec3 R = reflect(-viewDir, normal);
+	const float MAX_REFLECTION_LOD = 4.0;
+	vec3 prefilteredColor = texture(prefilteredMap, R, roughness * MAX_REFLECTION_LOD).rgb;
+	vec2 envBrdf = texture(brdfLutMap, vec2(max(dot(normal, viewDir), 0.0f), roughness)).rg;
+	vec3 envSpecular = prefilteredColor * (/*ambientS **/ envBrdf.x + envBrdf.y);	
+	
+	vec3 ambient = (albedo * irradiance * ambientD + envSpecular) * ao;
+
+	fragColor.xyz = ambient + fragColor.xyz * shadow + pointLightRadiance;
 	
 	// glow map.
 	float brightness = dot(fragColor.rgb / (fragColor.rgb + vec3(1.0f)), vec3(0.2126, 0.7152, 0.0722));
@@ -176,6 +194,11 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
 {
 	return F0 + (1.0f - F0) * pow(1.0 - cosTheta, 5.0f);
+}
+
+vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
+{
+	return F0 + (max(vec3(1.0f - roughness), F0) - F0) * pow (1.0 - cosTheta, 5.0f);
 }
 
 float shadowCalculation(vec4 fragPosLightSpace, float bias)

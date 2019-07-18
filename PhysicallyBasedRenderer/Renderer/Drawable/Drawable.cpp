@@ -38,6 +38,13 @@ namespace Renderer
 				textureMgr->bindTexture(m_texIndex[x].m_metallicIndex, 3);
 			}
 			meshMgr->drawMesh(m_meshIndex[x], m_instance, m_instanceNum);
+			if (x < m_texIndex.size())
+			{
+				textureMgr->unBindTexture(m_texIndex[x].m_albedoTexIndex);
+				textureMgr->unBindTexture(m_texIndex[x].m_normalTexIndex);
+				textureMgr->unBindTexture(m_texIndex[x].m_roughTexIndex);
+				textureMgr->unBindTexture(m_texIndex[x].m_metallicIndex);
+			}
 		}
 	}
 
@@ -63,6 +70,11 @@ namespace Renderer
 		if (sunLight)
 			sunLight->setLightUniform(shader, camera);
 		shader->setInt("albedoMap", 0);
+		shader->setInt("normalMap", 1);
+		shader->setInt("roughMap", 2);
+		shader->setInt("metallicMap", 3);
+		shader->setFloat("nearPlane", camera->getNear());
+		shader->setFloat("farPlane", camera->getFar());
 		// depth map.
 		Texture::ptr depthMap = TextureMgr::getSingleton()->getTexture("shadowDepth");
 		if (depthMap != nullptr)

@@ -3,6 +3,7 @@
 #include "TextureMgr.h"
 #include <iostream>
 
+
 namespace Renderer
 {
 	FrameBuffer::FrameBuffer(int width, int height, const std::string &depthName,
@@ -23,11 +24,6 @@ namespace Renderer
 		if (colorName.size() > 0)
 		{
 			glDrawBuffers(colorName.size(), ColorAttachments);
-		}
-		else
-		{
-			glDrawBuffer(GL_NONE);
-			glReadBuffer(GL_NONE);
 		}
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			std::cout << "Framebuffer not complete!" << std::endl;

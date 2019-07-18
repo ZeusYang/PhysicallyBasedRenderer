@@ -164,6 +164,7 @@
     <ClCompile Include="Renderer\Manager\TextureMgr.cpp" />
     <ClCompile Include="Renderer\Postprocess\DeferedShading.cpp" />
     <ClCompile Include="Renderer\Postprocess\GaussianBlur.cpp" />
+    <ClCompile Include="Renderer\Postprocess\IBLAuxiliary.cpp" />
     <ClCompile Include="Renderer\Postprocess\SSAOProcess.cpp" />
     <ClCompile Include="Renderer\RenderDevice.cpp" />
     <ClCompile Include="Renderer\RenderSystem.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Renderer\Manager\TextureMgr.h" />
     <ClInclude Include="Renderer\Postprocess\DeferedShading.h" />
     <ClInclude Include="Renderer\Postprocess\GaussianBlur.h" />
+    <ClInclude Include="Renderer\Postprocess\IBLAuxiliary.h" />
     <ClInclude Include="Renderer\Postprocess\SSAOProcess.h" />
     <ClInclude Include="Renderer\RenderDevice.h" />
     <ClInclude Include="Renderer\RenderSystem.h" />

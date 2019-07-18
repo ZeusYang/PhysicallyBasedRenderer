@@ -3,6 +3,8 @@
 #include "Camera/FPSCamera.h"
 #include "Camera/TPSCamera.h"
 
+#include "Postprocess/IBLAuxiliary.h"
+
 #include <iostream>
 #include <time.h>
 
@@ -44,6 +46,38 @@ namespace Renderer
 
 		// defered shading.
 		m_deferedShading = std::shared_ptr<DeferedShading>(new DeferedShading(m_width, m_height));
+	}
+
+	void RenderSystem::setSkyDomeHdr(const std::string & path)
+	{
+		if(m_skyDome != nullptr)
+			return;
+		unsigned int skyboxShader = m_shaderMgr->loadShader("skybox",
+			"./glsl/skybox.vert", "./glsl/skybox.frag");
+		unsigned int hdrTexIndex = m_textureMgr->loadTexture2DHdr("hdrTex", path);
+		unsigned int cubeTexIndex = m_textureMgr->loadTextureCubeHdrRaw("skyboxCubemap", nullptr, 1024, 1024);
+
+		// convert hdrmap to cubemap.
+		IBLAuxiliary::convertToCubemap(1024, 1024, hdrTexIndex, cubeTexIndex);
+
+		// precompute the irradiance map.
+		unsigned int irradianceTexIndex = m_textureMgr->loadTextureCubeHdrRaw("irradianceMap", nullptr, 64, 64);
+		IBLAuxiliary::convoluteDiffuseIntegral(64, 64, cubeTexIndex, irradianceTexIndex);
+
+		// prefilter the environment map for specular lighting.
+		unsigned int prefilteredTexIndex = m_textureMgr->loadTextureCubeHdrRaw("prefilteredMap", nullptr, 256, 256, true);
+		IBLAuxiliary::convoluteSpecularIntegral(256, 256, cubeTexIndex, prefilteredTexIndex);
+
+		// generate brdf lookup texture.
+		unsigned int brdfLutTexIndex = m_textureMgr->loadTexture2DHdrRaw("brdfLutMap", nullptr, 512, 512);
+		IBLAuxiliary::convoluteSpecularBRDFIntegral(512, 512, brdfLutTexIndex);
+
+		unsigned int mesh = m_meshMgr->loadMesh(new Sphere(1.0f, 10, 10));
+		m_skyDome = make_shared<SkyDome>(skyboxShader);
+		PBRMaterial mat;
+		mat.m_albedoTexIndex = cubeTexIndex;
+		m_skyDome->addMesh(mesh);
+		m_skyDome->addPbrTexture(mat);
 	}
 
 	void RenderSystem::setSkyDome(const std::string & path, const std::string & pFix)
@@ -128,6 +162,7 @@ namespace Renderer
 	{
 		if (m_drawableList == nullptr)
 			return;
+
 		// render the shadow.
 		m_shadowSys->renderShadow(m_width, m_height, m_drawableList, m_sunLight);
 
@@ -145,7 +180,7 @@ namespace Renderer
 		{
 			m_deferedShading->bindDeferedFramebuffer();
 
-			glClearColor(0.0, 0.0, 0.0, 1.0f);
+			glClearColor(0.0, 0.0, 1.0, 1.0f);
 			glClear(m_renderState.m_clearMask);
 
 			// polygon mode.

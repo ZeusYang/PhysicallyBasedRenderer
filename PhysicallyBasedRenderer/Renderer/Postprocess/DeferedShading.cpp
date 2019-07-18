@@ -49,6 +49,9 @@ namespace Renderer
 		deferedShader->setInt("droughness", 3);
 		deferedShader->setInt("ddepth", 4);
 		deferedShader->setInt("shadowDepth", 5);
+		deferedShader->setInt("irradianceMap", 6);
+		deferedShader->setInt("prefilteredMap", 7);
+		deferedShader->setInt("brdfLutMap", 8);
 		deferedShader->setMat4("lightSpaceMatrix", lightCamera->getProjectMatrix() * lightCamera->getViewMatrix());
 		sunLight->setLightUniform(deferedShader, camera);
 		deferedShader->setInt("pointLightNum", pointLights.size());
@@ -62,6 +65,9 @@ namespace Renderer
 		TextureMgr::getSingleton()->bindTexture("deferedRoughness", 3);
 		TextureMgr::getSingleton()->bindTexture("deferedDepth", 4);
 		TextureMgr::getSingleton()->bindTexture("shadowDepth", 5);
+		TextureMgr::getSingleton()->bindTexture("irradianceMap", 6);
+		TextureMgr::getSingleton()->bindTexture("prefilteredMap", 7);
+		TextureMgr::getSingleton()->bindTexture("brdfLutMap", 8);
 		MeshMgr::getSingleton()->drawMesh(m_screenQuadIndex, false, 0);
 		TextureMgr::getSingleton()->unBindTexture("deferedPos");
 		TextureMgr::getSingleton()->unBindTexture("deferedNormal");
@@ -69,6 +75,9 @@ namespace Renderer
 		TextureMgr::getSingleton()->unBindTexture("deferedRoughness");
 		TextureMgr::getSingleton()->unBindTexture("deferedDepth");
 		TextureMgr::getSingleton()->unBindTexture("shadowDepth");
+		TextureMgr::getSingleton()->unBindTexture("irradianceMap");
+		TextureMgr::getSingleton()->unBindTexture("prefilteredMap");
+		TextureMgr::getSingleton()->unBindTexture("brdfLutMap");
 		deferedShader->unBind();
 	}
 }

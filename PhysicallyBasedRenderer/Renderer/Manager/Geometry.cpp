@@ -125,12 +125,16 @@ namespace Renderer
 
 				glm::vec3 vNormal = glm::normalize(glm::vec3(x0, y0, z0));
 
-				vertices.push_back(
-					Vertex(x0, y0, z0,
-						vNormal.x, vNormal.y, vNormal.z,
-						static_cast<float>(seg) / static_cast<float>(numSegments),
-						static_cast<float>(ring) / static_cast<float>(numRings),
-						vNormal.x, vNormal.y, vNormal.z));
+				Vertex v(x0, y0, z0,
+					vNormal.x, vNormal.y, vNormal.z,
+					static_cast<float>(seg) / static_cast<float>(numSegments),
+					static_cast<float>(ring) / static_cast<float>(numRings),
+					vNormal.x, vNormal.y, vNormal.z);
+				glm::vec3 tangent, bitangent;
+				generateTangentAndBitangent(vNormal, tangent, bitangent);
+				v.tangent = tangent;
+				v.bitangent = bitangent;
+				vertices.push_back(v);
 				if (ring != numRings) 
 				{
 					//! each vertex (except the last) has six indicies pointing to it.
@@ -156,6 +160,8 @@ namespace Renderer
 		std::vector<unsigned int> indices;
 		Vertex current;
 		current.normal = glm::vec3(0.0f, 1.0f, 0.0f);
+		current.tangent = glm::vec3(1.0f, 0.0f, 0.0f);
+		current.bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
 		float texcoordScale = width / 8.0f;
 		texcoordScale = 1.0f;
 		// v0

@@ -61,6 +61,9 @@ namespace Renderer
 		void setupMesh(const std::vector<Vertex> &vert,
 			const std::vector<unsigned int> &indi);
 		void clearMesh();
+
+		void generateTangentAndBitangent(const glm::vec3 &normal, 
+			glm::vec3 &tangent, glm::vec3 &bitangent);
 	};
 
 }

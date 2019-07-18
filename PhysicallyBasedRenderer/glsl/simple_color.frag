@@ -4,7 +4,6 @@ in vec3 Normal;
 in vec3 Color;
 
 layout(location = 0) out vec4 fragColor;
-layout(location = 1) out vec4 brightColor;
 
 void main(){
 	fragColor = vec4(Color,1.0f);

@@ -72,6 +72,7 @@ namespace Renderer
 		// Initialization.
 		void resize(int width, int height);
 		void initialize(int width, int height, int shadowWidth, int shadowHeight);
+		void setSkyDomeHdr(const std::string &path);
 		void setSkyDome(const std::string &path, const std::string &pFix);
 		Camera3D::ptr createFPSCamera(glm::vec3 pos, glm::vec3 target);
 		Camera3D::ptr createTPSCamera(glm::vec3 pos, glm::vec3 target);
