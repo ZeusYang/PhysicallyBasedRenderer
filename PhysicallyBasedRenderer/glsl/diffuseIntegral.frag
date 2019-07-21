@@ -17,7 +17,7 @@ void main()
 	up = cross(normal, right);
 	
 	float sampleDelta = 0.025;
-	float nSamples = 0.0f;
+	float sampleDeltaSquared = sampleDelta * sampleDelta;
 	for(float phi = 0.0f; phi < 2.0 * PI;phi += sampleDelta)
 	{
 		for(float theta = 0.0f; theta < 0.5 * PI;theta += sampleDelta)
@@ -26,10 +26,10 @@ void main()
 			// tangent space to world space.
 			sampleDir = sampleDir.x * right + sampleDir.y * up + sampleDir.z * normal;
 			
-			irradiance += texture(environmentMap, sampleDir).rgb * cos(theta) * sin(theta);
-			++ nSamples;
+			irradiance += texture(environmentMap, sampleDir).rgb * cos(theta) * sin(theta) * sampleDeltaSquared;
 		}
 	}
-	irradiance = PI * irradiance * (1.0f / nSamples);
+	irradiance = (1.0f / PI) * irradiance ;
 	fragColor = vec4(irradiance, 1.0f);
 }
+

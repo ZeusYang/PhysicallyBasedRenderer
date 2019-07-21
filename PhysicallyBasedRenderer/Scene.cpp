@@ -72,19 +72,17 @@ void FelLordScene::initializeScene(Renderer::RenderSystem::ptr renderSys)
 	unsigned int pbrShader = shaderMgr->loadShader("pbrShader",
 		"./glsl/pbrShader.vert", "./glsl/pbrShader.frag");
 
-	StaticModelDrawable *FelLord = new StaticModelDrawable(pbrShader,
-		"./res/FelLord/Full_low.obj");
+	//StaticModelDrawable *FelLord = new StaticModelDrawable(pbrShader,
+	//	"./res/FelLord/Full_low.obj");
 	StaticModelDrawable *lamp = new StaticModelDrawable(pbrShader,
 		"./res/lamp/lamp.obj");
-	StaticModelDrawable *lantern = new StaticModelDrawable(pbrShader,
-		"./res/lantern/lantern_obj.obj");
 	StaticModelDrawable *barrel = new StaticModelDrawable(pbrShader,
 		"./res/barrel/barrels_obj.obj");
 	StaticModelDrawable *seashell = new StaticModelDrawable(pbrShader,
 		"./res/seashell_obj/seashell_obj.obj");
 
 	// 
-	unsigned int planeMeshIndex = meshMgr->loadMesh(new Plane(400, 400));
+	unsigned int planeMeshIndex = meshMgr->loadMesh(new Plane(900, 900));
 	unsigned int sphereMeshIndex = meshMgr->loadMesh(new Sphere(10, 25, 25));
 
 	PBRMaterial mat;
@@ -106,7 +104,6 @@ void FelLordScene::initializeScene(Renderer::RenderSystem::ptr renderSys)
 		"./res/greasy-pan-2/greasy-pan-2-normal.png");
 	spMat.m_roughTexIndex = textureMgr->loadTexture2D("greasy-pan-2-roughness",
 		"./res/greasy-pan-2/greasy-pan-2-roughness.png");
-	// material sphere.
 	PBRMaterial spMat1;
 	spMat1.m_albedoTexIndex = textureMgr->loadTexture2D("streaked-metal1-rough",
 		"./res/streaked-metal1/streaked-metal1-albedo.png");
@@ -116,53 +113,78 @@ void FelLordScene::initializeScene(Renderer::RenderSystem::ptr renderSys)
 		"./res/streaked-metal1/streaked-metal1-normal-dx.png");
 	spMat1.m_roughTexIndex = textureMgr->loadTexture2D("streaked-metal1-rough",
 		"./res/streaked-metal1/streaked-metal1-rough.png");
-	// material sphere.
-	//PBRMaterial floorMat;
-	//floorMat.m_albedoTexIndex = textureMgr->loadTexture2D("greasy-pan-2-albedo",
-	//	"./res/streaked-metal1/streaked-metal1-albedo.png");
-	//floorMat.m_metallicIndex = textureMgr->loadTexture2D("greasy-pan-2-metal",
-	//	"./res/streaked-metal1/streaked-metal1-metalness.png");
-	//floorMat.m_normalTexIndex = textureMgr->loadTexture2D("greasy-pan-2-normal",
-	//	"./res/streaked-metal1/streaked-metal1-normal-dx.png");
-	//floorMat.m_roughTexIndex = textureMgr->loadTexture2D("greasy-pan-2-roughness",
-	//	"./res/streaked-metal1/streaked-metal1-rough.png");
+	PBRMaterial militaryMat;
+	militaryMat.m_albedoTexIndex = textureMgr->loadTexture2D("military-panel1-albedo",
+		"./res/military-panel/military-panel1-albedo.png");
+	militaryMat.m_metallicIndex = textureMgr->loadTexture2D("military-panel1-metalness",
+		"./res/military-panel/military-panel1-metalness.png");
+	militaryMat.m_normalTexIndex = textureMgr->loadTexture2D("military-panel1-nmap-dx",
+		"./res/military-panel/military-panel1-nmap-dx.png");
+	militaryMat.m_roughTexIndex = textureMgr->loadTexture2D("military-panel1-rough",
+		"./res/military-panel/military-panel1-rough.png");
+	PBRMaterial brickMat;
+	brickMat.m_albedoTexIndex = textureMgr->loadTexture2D("harshbricks-albedo",
+		"./res/harshbricks/harshbricks-albedo.png");
+	brickMat.m_metallicIndex = textureMgr->loadTexture2D("harshbricks-metalness",
+		"./res/harshbricks/harshbricks-metalness.png");
+	brickMat.m_normalTexIndex = textureMgr->loadTexture2D("harshbricks-normal",
+		"./res/harshbricks/harshbricks-normal.png");
+	brickMat.m_roughTexIndex = textureMgr->loadTexture2D("harshbricks-roughness",
+		"./res/harshbricks/harshbricks-roughness.png");
+	// floor material.
+	PBRMaterial floorMat;
+	floorMat.m_albedoTexIndex = textureMgr->loadTexture2D("bathroomtile2-basecolor",
+		"./res/floorMat/bathroomtile2-basecolor.png");
+	floorMat.m_metallicIndex = textureMgr->loadTexture2D("bathroomtile2-metalness",
+		"./res/floorMat/bathroomtile2-metalness.png");
+	floorMat.m_normalTexIndex = textureMgr->loadTexture2D("bathroomtile2-normal-dx",
+		"./res/floorMat/bathroomtile2-normal-dx.png");
+	floorMat.m_roughTexIndex = textureMgr->loadTexture2D("bathroomtile2-roughness",
+		"./res/floorMat/bathroomtile2-roughness.png");
 
 	SimpleDrawable *sphere1 = new SimpleDrawable(pbrShader);
 	SimpleDrawable *sphere2 = new SimpleDrawable(pbrShader);
 	SimpleDrawable *sphere3 = new SimpleDrawable(pbrShader);
+	SimpleDrawable *sphere4 = new SimpleDrawable(pbrShader);
+	SimpleDrawable *sphere5 = new SimpleDrawable(pbrShader);
 	sphere1->addMesh(sphereMeshIndex);
 	sphere2->addMesh(sphereMeshIndex);
 	sphere3->addMesh(sphereMeshIndex);
+	sphere4->addMesh(sphereMeshIndex);
+	sphere5->addMesh(sphereMeshIndex);
 	sphere1->addPbrTexture(mat);
 	sphere2->addPbrTexture(spMat);
 	sphere3->addPbrTexture(spMat1);
+	sphere4->addPbrTexture(militaryMat);
+	sphere5->addPbrTexture(brickMat);
 
 	SimpleDrawable *floor = new SimpleDrawable(pbrShader);
 	floor->addMesh(planeMeshIndex);
-	floor->addPbrTexture(spMat1);
+	floor->addPbrTexture(floorMat);
 
 	sphere1->getTransformation()->translate(glm::vec3(0, 10, 50));
 	sphere2->getTransformation()->translate(glm::vec3(20, 10, 50));
 	sphere3->getTransformation()->translate(glm::vec3(-20, 10, 50));
+	sphere4->getTransformation()->translate(glm::vec3(-40, 10, 50));
+	sphere5->getTransformation()->translate(glm::vec3(+40, 10, 50));
 
-	FelLord->getTransformation()->setScale(glm::vec3(10.0f));
-	FelLord->getTransformation()->translate(glm::vec3(40.0, 20.0, 0.0));
+	//FelLord->getTransformation()->setScale(glm::vec3(10.0f));
+	//FelLord->getTransformation()->translate(glm::vec3(40.0, 20.0, 0.0));
 	lamp->getTransformation()->setScale(glm::vec3(4.0f));
-	lantern->getTransformation()->setScale(glm::vec3(0.6f));
-	lantern->getTransformation()->translate(glm::vec3(-100, 0, -50));
 	barrel->getTransformation()->setScale(glm::vec3(0.5f));
 	barrel->getTransformation()->translate(glm::vec3(+100, 0, -50));
 	seashell->getTransformation()->translate(glm::vec3(90, 0, 90));
 	seashell->getTransformation()->setScale(glm::vec3(0.5f));
-	renderSys->addDrawable(FelLord);
+	//renderSys->addDrawable(FelLord);
 	renderSys->addDrawable(lamp);
-	renderSys->addDrawable(lantern);
 	renderSys->addDrawable(barrel);
 	renderSys->addDrawable(seashell);
 	renderSys->addDrawable(floor);
 	renderSys->addDrawable(sphere1);
 	renderSys->addDrawable(sphere2);
 	renderSys->addDrawable(sphere3);
+	renderSys->addDrawable(sphere4);
+	renderSys->addDrawable(sphere5);
 
 	srand(time(nullptr));
 	for (unsigned int x = 0; x < 128; ++x)

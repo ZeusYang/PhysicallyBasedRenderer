@@ -139,13 +139,15 @@ void main()
 	// ambient lighting.
 	vec3 ambientS = fresnelSchlickRoughness(max(dot(normal, viewDir), 0.0f), F0, roughness);
 	vec3 ambientD = vec3(1.0f) - ambientS;
+	ambientD *= (1.0 - metallic);
 	vec3 irradiance = texture(irradianceMap, normal).rgb;
 
-	vec3 R = reflect(-viewDir, normal);
+	vec3 R = normalize(reflect(-viewDir, normal));
 	const float MAX_REFLECTION_LOD = 4.0;
 	vec3 prefilteredColor = texture(prefilteredMap, R, roughness * MAX_REFLECTION_LOD).rgb;
+
 	vec2 envBrdf = texture(brdfLutMap, vec2(max(dot(normal, viewDir), 0.0f), roughness)).rg;
-	vec3 envSpecular = prefilteredColor * (/*ambientS **/ envBrdf.x + envBrdf.y);	
+	vec3 envSpecular = prefilteredColor * (ambientS * envBrdf.x + envBrdf.y);
 	
 	vec3 ambient = (albedo * irradiance * ambientD + envSpecular) * ao;
 

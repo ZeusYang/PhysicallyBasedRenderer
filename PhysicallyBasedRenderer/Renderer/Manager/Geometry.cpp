@@ -162,8 +162,8 @@ namespace Renderer
 		current.normal = glm::vec3(0.0f, 1.0f, 0.0f);
 		current.tangent = glm::vec3(1.0f, 0.0f, 0.0f);
 		current.bitangent = glm::vec3(0.0f, 0.0f, 1.0f);
-		float texcoordScale = width / 8.0f;
-		texcoordScale = 1.0f;
+		float texcoordScale = width / 200.0f;
+		//texcoordScale = 1.0f;
 		// v0
 		current.position = glm::vec3(-half_width, 0.0f, -half_height);
 		current.texcoord = glm::vec2(0.0f, texcoordScale);

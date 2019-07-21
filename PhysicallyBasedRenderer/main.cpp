@@ -40,11 +40,8 @@ int main(int argc, char *argv[])
 	Scene::ptr fellord = shared_ptr<FelLordScene>(new FelLordScene());
 	fellord->initializeScene(renderSys);
 
-	//Scene::ptr hatka = shared_ptr<HatkaScene>(new HatkaScene());
-	//hatka->initializeScene(renderSys);
-
 	// set sky map.
-	renderSys->setSkyDomeHdr("./res/Hdr/Mans_Outside_2k.hdr");
+	renderSys->setSkyDomeHdr("./res/Hdr/14-Hamarikyu_Bridge_B_3k.hdr");
 
 	while (window->run())
 	{

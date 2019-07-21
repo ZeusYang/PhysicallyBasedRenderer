@@ -22,7 +22,9 @@ void main()
 	for(uint i = 0u;i < sampleCount;++ i)
 	{
 		vec2 Xi = hammersley(i, sampleCount);
+		// sample halfway vector.
 		vec3 H = importanceSampleGGX(Xi, N, roughness);
+		// reflect vector.
 		vec3 L = normalize(2.0 * dot(V, H) * H - V);
 		
 		float NdotL = max(dot(N, L), 0.0);
@@ -59,16 +61,15 @@ vec3 importanceSampleGGX(vec2 Xi, vec3 N, float roughness)
 	float phi = 2.0 * PI * Xi.x;
 	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a * a - 1.0) * Xi.y));
 	float sinTheta = sqrt(1.0 - cosTheta * cosTheta);
-	
 	vec3 H;
 	H.x = cos(phi) * sinTheta;
 	H.y = sin(phi) * sinTheta;
 	H.z = cosTheta;
-
+	
+	// from tangent space to world space.
 	vec3 up = abs(N.z) < 0.999 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);
 	vec3 tangent = normalize(cross(up, N));
 	vec3 bitangent = cross(N, tangent);
-
 	vec3 sampleVec = H.x * tangent + H.y * bitangent + H.z * N;
 	return normalize(sampleVec);
 }
