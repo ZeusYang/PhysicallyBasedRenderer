@@ -7,6 +7,7 @@ Physically Based Rendering
 - Cook-Torrance Physically Based Rendering
 - Screen Space Ambient Occlusion
 - Defered Shading
+- Image Based Lighting
 
 ## Third Party
 - glm
